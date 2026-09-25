@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ProjectStorage{
     
-    var projectDatabase: [Project]
+    private(set) var projectDatabase: [Project]
     
     mutating func addProject(project: Project){
         projectDatabase.append(project)
@@ -19,5 +19,7 @@ struct ProjectStorage{
     mutating func deleteAllProjects(){
         projectDatabase.removeAll()
     }
+    
+    
     
 }

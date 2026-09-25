@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct Project{
+struct Project: Identifiable{
     var id: UUID
     var name: String
     var language: Language 

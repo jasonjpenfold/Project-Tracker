@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(ProjectTrackerViewModel.self) private var model
     var body: some View {
         VStack {
             Spacer()
@@ -29,7 +30,8 @@ extension ContentView{
     }
     
     private var trackerBody: some View{
-        Text("List of projects")
+        
+        ProjectListView()
     }
     
     private var footer: some View{
