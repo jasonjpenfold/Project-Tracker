@@ -1,0 +1,43 @@
+import SwiftUI
+
+enum Language{
+    case swift
+    case python
+    case c 
+    case cpp
+    case cSharp
+    case javascript
+    case typescript
+    case java
+    case kotlin
+    case go
+    case dart
+    case rust
+    case php
+    case sql
+    case ruby
+    case r 
+    case matlab
+    case scala
+    case perl
+    case shell
+    case powershell
+    case objectiveC
+    case delphi
+    case visualBasic
+    case solidity
+    case lua
+    case julia
+    case haskell
+    case fSharp
+    case fortran
+    case cobol
+    case ada
+    case lisp
+    case prolog
+    case scratch
+    case tcl
+    case assembly
+    case vbScript
+    case verilog
+}

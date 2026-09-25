@@ -1,0 +1,22 @@
+Projects or ProjectTracker
+and create only this initially:
+ProjectTracker
+│
+├── Project.swift
+├── ProjectStore.swift
+├── ContentView.swift
+└── ProjectTrackerApp.swift
+And the first version does just this:
+My Projects
+
+Torch
+Swift
+In Progress
+
+iPadPackageBrowser
+Swift
+Complete
+
+Temperature Converter
+Python
+Complete
