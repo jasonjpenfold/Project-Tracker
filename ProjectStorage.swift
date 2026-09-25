@@ -8,8 +8,12 @@ struct ProjectStorage{
         projectDatabase.append(project)
     }
     
-    mutating func removeProject(indexSet: IndexSet){
-        projectDatabase.remove(atOffsets: indexSet)
+    mutating func editProject(project: Project){
+        // TODO edit project
+    }
+    
+    mutating func removeProject(project: Project){
+        projectDatabase.removeAll(where: {$0.id == project.id})
     }
     
     mutating func deleteAllProjects(){
