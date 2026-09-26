@@ -3,31 +3,52 @@ import SwiftUI
 struct ContentView: View {
     @Environment(ProjectTrackerViewModel.self) private var model
     var body: some View {
-        VStack {
-            Spacer()
-            HStack{
-                Image(systemName: "globe")
-                    .imageScale(.large)
-                    .foregroundColor(.accentColor)
+        @Bindable var model = model
+        
+        NavigationStack(path: $model.path){
+            VStack {
+                Spacer()
                 header
+                Spacer()
+                trackerBody
+                Spacer()
+                footer
+                Spacer()
                 
                 
             }
-            Spacer()
-            trackerBody
-            Spacer()
-            footer
-            Spacer()
-            
-            
+            .navigationDestination(for: String.self){
+                value in 
+                if value == "AddView"{
+                    AddView()
+                }
+            }
+            .toolbar{
+                ToolbarItem{
+                    Button{
+                        model.path.append("AddView")
+                    }label: {
+                        Image(systemName: "plus")
                     }
+                }
+            }
+        }.navigationBarTitleDisplayMode(.inline)
+        .navigationTitle("Home")
+        .padding()
+        
+        
     }
 }
 
 extension ContentView{
     private var header: some View{
-        Text("Project Tracker")
-    }
+        VStack{
+            
+            Text("Project Tracker")
+                .font(.title.monospaced().bold())
+            
+        }
+            }
     
     private var trackerBody: some View{
         
