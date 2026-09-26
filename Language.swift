@@ -1,6 +1,6 @@
 import SwiftUI
 
-enum Language{
+enum Language: Identifiable,CaseIterable,CustomStringConvertible{
     case swift
     case python
     case c 
@@ -40,4 +40,89 @@ enum Language{
     case assembly
     case vbScript
     case verilog
+    
+    var id: Self{self}
+    
+    var description: String{
+        switch self {
+        case .swift:
+            return "Swift"
+        case .python:
+            return "Python"
+        case .c:
+            return "C"
+        case .cpp:
+            return "C++"
+        case .cSharp:
+            return "C#"
+        case .javascript:
+            return "JavaScript"
+        case .typescript:
+            return "TypeScript"
+        case .java:
+            return "Java"
+        case .kotlin:
+            return "Kotlin"
+        case .go:
+            return "Go"
+        case .dart:
+            return "Dart"
+        case .rust:
+            return "Rust"
+        case .php:
+            return "PHP"
+        case .sql:
+            return "SQL"
+        case .ruby:
+            return "Ruby"
+        case .r:
+            return "R"
+        case .matlab:
+            return "Matlab"
+        case .scala:
+            return "Scala"
+        case .perl:
+            return "Perl"
+        case .shell:
+            return "Shell"
+        case .powershell:
+            return "Powershell"
+        case .objectiveC:
+            return "ObjectiveC"
+        case .delphi:
+            return "Delphi"
+        case .visualBasic:
+            return "Visual Basic"
+        case .solidity:
+            return "Solidity"
+        case .lua:
+            return "Lua"
+        case .julia:
+            return "Julia"
+        case .haskell:
+            return "Haskell"
+        case .fSharp:
+            return "F#"
+        case .fortran:
+            return "Fortran"
+        case .cobol:
+            return "Cobol"
+        case .ada:
+            return "Ada"
+        case .lisp:
+            return "Lisp"
+        case .prolog:
+            return "Prolog"
+        case .scratch:
+            return "Scratch"
+        case .tcl:
+            return "Tcl"
+        case .assembly:
+            return "Assembly"
+        case .vbScript:
+            return "VBScript"
+        case .verilog:
+            return "Verilog"
+        }
+    }
 }

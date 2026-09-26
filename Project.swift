@@ -11,6 +11,10 @@ struct Project: Identifiable{
     var notes: String
     var favourite: Bool
     
+    static func emptyProject()->Project{
+        return Project(id: UUID(), name: "", language: .swift, description: "", status: .notStarted, dateStarted: .now, lastWorkedOn: .now, notes: "", favourite: false)
+    }
+    
 }
 /*
  ├── name

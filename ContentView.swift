@@ -20,7 +20,8 @@ struct ContentView: View {
             .navigationDestination(for: String.self){
                 value in 
                 if value == "AddView"{
-                    AddView()
+                    var newProject = model.createEmptyProject()
+                    AddView(newProject: newProject)
                 }
             }
             .toolbar{
