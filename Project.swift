@@ -12,7 +12,7 @@ struct Project: Identifiable{
     var favourite: Bool
     
     static func emptyProject()->Project{
-        return Project(id: UUID(), name: "", language: .swift, description: "", status: .notStarted, dateStarted: .now, lastWorkedOn: .now, notes: "", favourite: false)
+        return Project(id: UUID(), name: "", language: .swift, description: "", status: .planning, dateStarted: .now, lastWorkedOn: .now, notes: "", favourite: false)
     }
     
 }

@@ -6,12 +6,14 @@ struct ProjectListView: View{
     
     var body: some View{
         List{
+            
             ForEach(model.projectStorage.projectDatabase){
                 project in
                 
                 cardView(project: project)
                     
             }
+            
         }
     }
     

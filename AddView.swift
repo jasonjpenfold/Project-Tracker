@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct AddView: View{
+    @Environment(ProjectTrackerViewModel.self) private var model
+    @Environment(\.dismiss) private var dismiss
     @State var newProject: Project
     var body: some View{
         Form{
@@ -39,7 +41,14 @@ struct AddView: View{
              
              Text("\(project.favourite ? "❤️" : " ")")
              */
+            Button("Submit"){
+                model.addProject(project: newProject)
+                dismiss()
+            }
+            .buttonStyle(.glassProminent)
+            
         }
-    
+        
+            
     }
 }

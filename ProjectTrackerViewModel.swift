@@ -13,4 +13,8 @@ class ProjectTrackerViewModel{
     func createEmptyProject()->Project{
         return Project.emptyProject()
     }
+    
+    func addProject(project: Project){
+        projectStorage.addProject(project: project)
+    }
 }
