@@ -1,6 +1,6 @@
 import SwiftUI
 
-enum Status: Identifiable,CaseIterable,CustomStringConvertible{
+enum Status: Identifiable,CaseIterable,CustomStringConvertible, Codable{
     
     case planning
     case inProgress
