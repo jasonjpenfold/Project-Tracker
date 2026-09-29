@@ -3,6 +3,7 @@ import SwiftUI
 @Observable
 class ProjectTrackerViewModel{
     private(set) var projectStorage  = ProjectStorage()
+    var path = NavigationPath()
     
     init(){
         
