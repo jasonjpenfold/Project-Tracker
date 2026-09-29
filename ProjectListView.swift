@@ -6,12 +6,18 @@ struct ProjectListView: View{
     
     var body: some View{
         List{
-            
+            EditButton()
             ForEach(model.projectStorage.projectDatabase){
                 project in
                 
                 cardView(project: project)
                     
+            }.onDelete{offsets in 
+                model.deleteProject(at: offsets)
+                
+            }
+            .onMove{ source, destination in
+                model.moveProject(source: source, destination: destination)
             }
             
         }

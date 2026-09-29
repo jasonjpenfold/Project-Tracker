@@ -1,12 +1,18 @@
 import SwiftUI
 
 struct JsonService{
+    enum JsonServiceError: Error{
+        case noFileError
+    }
     static func loadJson<T: Decodable>(filename: String, fileType: T )throws->T{
         let fileManager = FileManager.default
         let fileURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(filename)
+        if !fileManager.fileExists(atPath: fileURL.path()){
+            throw JsonServiceError.noFileError
+        }
         
         let data = try Data(contentsOf: fileURL)
-        let decodedData: T = try JSONDecoder().decode(fileType.self as! T.Type, from: data)
+        let decodedData: T = try JSONDecoder().decode(T.self, from: data)
         
         return decodedData
          
@@ -18,21 +24,3 @@ struct JsonService{
         try encodedData.write(to: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(filename))
     }
 }
-/*
-
-    
-    static func saveJson(data: [Book])throws{
-        let jsonEncoder = JSONEncoder()
-        let encodedData = try jsonEncoder.encode(data)
-        try encodedData.write(to: documentURL)
-    }
-    
-    static func loadJson()throws->[Book]{
-        let data = try Data(contentsOf: documentURL)
-        let jsonDecoder = JSONDecoder()
-        let decodedData = try jsonDecoder.decode([Book].self, from: data)
-        return decodedData
-    }
-    
-}
-*/

@@ -2,10 +2,11 @@ import SwiftUI
 
 struct ContentView: View {
     @Environment(ProjectTrackerViewModel.self) private var model
+    @State private var path = NavigationPath()
     var body: some View {
         @Bindable var model = model
         
-        NavigationStack(path: $model.path){
+        NavigationStack(path: $path){
             VStack {
                 Spacer()
                 header
@@ -20,14 +21,14 @@ struct ContentView: View {
             .navigationDestination(for: String.self){
                 value in 
                 if value == "AddView"{
-                    var newProject = model.createEmptyProject()
+                    let newProject = model.createEmptyProject()
                     AddView(newProject: newProject)
                 }
             }
             .toolbar{
                 ToolbarItem{
                     Button{
-                        model.path.append("AddView")
+                        path.append("AddView")
                     }label: {
                         Image(systemName: "plus")
                     }
