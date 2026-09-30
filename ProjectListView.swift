@@ -5,9 +5,10 @@ struct ProjectListView: View{
     @Environment(ProjectTrackerViewModel.self) private var model
     
     var body: some View{
+        @Bindable var model = model
         List{
-            EditButton()
-            ForEach(model.projectStorage.projectDatabase){
+            //EditButton()
+            ForEach(model.currentList){
                 project in
                 
                 cardView(project: project)
@@ -16,13 +17,17 @@ struct ProjectListView: View{
                         model.path.append(project)
                     }
                     
-                }.onDelete{offsets in 
+                }
+            /*
+            .onDelete{offsets in 
                 model.deleteProject(at: offsets)
                 
             }
             .onMove{ source, destination in
                 model.moveProject(source: source, destination: destination)
             }
+             */
+            .searchable(text: $model.searchText, placement: .automatic)
             
             
         }
@@ -38,6 +43,7 @@ struct ProjectListView: View{
             .padding()
             .frame(maxWidth: .infinity, minHeight: 200)
             .background{cardBackground}
+            
             
             
             

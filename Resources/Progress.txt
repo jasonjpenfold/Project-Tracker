@@ -2,3 +2,6 @@
 Finish editview to update model
 completed
 used ProjectTrackerError and Alert(item:)
+
+- add search
+- needs currentList - derived state

@@ -3,6 +3,27 @@ import SwiftUI
 @Observable
 class ProjectTrackerViewModel{
     private(set) var projectStorage  = ProjectStorage()
+    var currentList: [Project] {
+        var newList = projectStorage.projectDatabase
+        
+        //search
+        if !searchText.isEmpty{
+            newList = newList.filter{$0.name.localizedCaseInsensitiveContains(searchText)}
+        }
+        //filter
+        if let selectedFilter{
+            newList = selectedFilter.apply(to: newList)
+        }
+        //sort
+        if let selectedSort{
+            newList = selectedSort.apply(to: newList)
+        }
+        
+        return newList
+    }
+    var searchText = ""
+    var selectedFilter: Filters? = nil
+    var selectedSort: SortedBy? = nil
     var path = NavigationPath()
     var projectError: ProjectTrackerError? = nil
     
