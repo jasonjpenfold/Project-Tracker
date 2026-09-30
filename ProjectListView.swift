@@ -71,8 +71,11 @@ struct ProjectListView: View{
             Text("Started: \(project.dateStarted.formatted(date: .abbreviated, time: .shortened))")
             Text("Last: \(project.lastWorkedOn.formatted(date: .abbreviated, time: .shortened))")
             Text("Notes: \(project.notes)")
-            Text("\(project.favourite ? "❤️" : " ")")
-            
+            HStack{
+                Spacer()
+                Text("\(project.favourite ? "❤️" : "⚪️")")
+            }
+                        
                     }
     }
     

@@ -40,12 +40,9 @@ struct EditView: View{
                 }
                 .buttonStyle(.glass)
                 Button("Submit"){
-                    do{
-                        try model.editProject(project: editProject)
+                    model.editProject(project: editProject)
                         dismiss()
-                    }catch{
-                        
-                    }
+                    
                     
                 }
                 .buttonStyle(.glassProminent)
