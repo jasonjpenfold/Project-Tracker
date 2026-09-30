@@ -17,6 +17,7 @@ struct ContentView: View {
                 Spacer()
                 
                 
+                
             }
             .navigationDestination(for: String.self){
                 value in 
@@ -39,6 +40,22 @@ struct ContentView: View {
             }
             
             .toolbar{
+                ToolbarItem{
+                    Picker("Filter", selection: $model.selectedFilter){
+                        ForEach(ProjectTrackerViewModel.Filters.allCases){
+                            Text($0.description)
+                                .tag($0)
+                        }
+                    }.pickerStyle(.automatic)
+                }
+                ToolbarItem{
+                    Picker("Sorted By", selection: $model.selectedSort){
+                        ForEach(ProjectTrackerViewModel.SortedBy.allCases){
+                            Text($0.description)
+                                .tag($0)
+                        }
+                    }.pickerStyle(.automatic)
+                }
                 ToolbarItem{
                     Button{
                         model.path.append("AddView")

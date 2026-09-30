@@ -4,6 +4,7 @@ extension ProjectTrackerViewModel{
     enum Filters: Identifiable, CaseIterable, CustomStringConvertible{
         
         case favourites
+        case none
         
         
         var id: Self{self}
@@ -13,6 +14,8 @@ extension ProjectTrackerViewModel{
             
             case .favourites:
                 return "Favourites"
+            case .none:
+                return "No Filter"
             
             }
         }
@@ -21,6 +24,8 @@ extension ProjectTrackerViewModel{
             switch self{
             case .favourites:
                 return projectList.filter{$0.favourite == true}
+            case .none:
+                return projectList
             }
         }
     }
