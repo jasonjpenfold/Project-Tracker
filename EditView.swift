@@ -2,6 +2,9 @@ import SwiftUI
 
 struct EditView: View{
     @State var editProject: Project
+    @Environment(ProjectTrackerViewModel.self) private var model
+
+    @Environment(\.dismiss) private var dismiss
     var body: some View{
         Form{
             
@@ -30,7 +33,25 @@ struct EditView: View{
             
             TextField("Notes", text: $editProject.notes)
             Toggle("Favourite", isOn: $editProject.favourite)
-          
+            
+            HStack{
+                Button("Cancel",role: .cancel){
+                    dismiss()
+                }
+                .buttonStyle(.glass)
+                Button("Submit"){
+                    do{
+                        try model.editProject(project: editProject)
+                        dismiss()
+                    }catch{
+                        
+                    }
+                    
+                }
+                .buttonStyle(.glassProminent)
+                Spacer()
+                Text("\(editProject.favourite ? "❤️" : " ")")
+            }
         }
         
     }

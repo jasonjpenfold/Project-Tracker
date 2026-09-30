@@ -8,8 +8,13 @@ struct ProjectStorage: Codable{
         projectDatabase.append(project)
     }
     
-    mutating func editProject(project: Project){
+    mutating func editProject(project: Project)->Bool{
         // TODO edit project
+        if let projectIndex = getIndexFromIdHelper(project: project){
+            projectDatabase[projectIndex] = project
+            return true
+        }
+        return false
     }
     
     mutating func deleteProject(at offSets: IndexSet){
@@ -28,12 +33,15 @@ struct ProjectStorage: Codable{
         projectDatabase.move(fromOffsets: indexSet, toOffset: destination)
     }
     
-    mutating func loadData(){
+    mutating func loadData()->Bool{
         do{
             self.projectDatabase = try JsonService.loadJson(filename: "projects.json", fileType: projectDatabase)
+            return true
         }catch{
             print("Error loading json")
+            
             self.projectDatabase = [Project(id: UUID(), name: "Project Tracker", language: .swift, description: "List of projects", status: .inProgress, dateStarted: .now, lastWorkedOn: .now, notes: "Tracking lists of projects, which language is used and status", favourite: true)]
+            return false
         }
     }
     func saveData(){
@@ -44,6 +52,8 @@ struct ProjectStorage: Codable{
         }
     }
     
-    
+    func getIndexFromIdHelper(project: Project)->Int?{
+        return projectDatabase.firstIndex(where:{ $0.id == project.id})
+    }
     
 }

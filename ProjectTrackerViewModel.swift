@@ -4,10 +4,36 @@ import SwiftUI
 class ProjectTrackerViewModel{
     private(set) var projectStorage  = ProjectStorage()
     var path = NavigationPath()
+    var projectError: ProjectTrackerError? = nil
+    
+    enum ProjectTrackerError: Error, LocalizedError, Identifiable, CustomStringConvertible{
+        var description: String{
+            switch self{
+            case .loadError:
+                return "Loading error"
+            case .editProjectError:
+                return "Editing Project error"
+            }
+        }
+
+        case loadError
+        case editProjectError
+        
+        var id: Self{self}
+        var errorDescription: String?{
+            switch self{
+            case .loadError:
+                return "Error loading data:\nDefault data added."
+            case .editProjectError:
+                return "Unable to edit project."
+            }
+        }
+            
+    }
     
     init(){
         
-        projectStorage.loadData()
+        projectError = projectStorage.loadData() ? nil : .loadError
         
     }
     
@@ -26,5 +52,10 @@ class ProjectTrackerViewModel{
     func moveProject(source: IndexSet, destination: Int){
         projectStorage.moveProject(from: source, to: destination)
         projectStorage.saveData()
+    }
+    func editProject(project: Project){
+        if !projectStorage.editProject(project: project){
+            projectError = ProjectTrackerError.editProjectError
+        }
     }
 }

@@ -33,6 +33,10 @@ struct ContentView: View {
                 
                 
             }
+            .alert(item: $model.projectError){
+                error in 
+                Alert(title: Text(error.description), message: Text(error.localizedDescription), dismissButton: .default(Text("Ok")))
+            }
             
             .toolbar{
                 ToolbarItem{

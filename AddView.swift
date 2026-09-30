@@ -32,21 +32,21 @@ struct AddView: View{
             
             TextField("Notes", text: $newProject.notes)
             Toggle("Favourite", isOn: $newProject.favourite)
-            /*
-             
-             
-             
-             
-             
-             
-             Text("\(project.favourite ? "❤️" : " ")")
-             */
-            Button("Submit"){
-                model.addProject(project: newProject)
-                dismiss()
-            }
-            .buttonStyle(.glassProminent)
             
+            HStack{
+                Button("Cancel",role: .cancel){
+                    dismiss()
+                }
+                .buttonStyle(.glass)
+                Button("Submit"){
+                    model.addProject(project: newProject)
+                    dismiss()
+                }
+                .buttonStyle(.glassProminent)
+                Spacer()
+                Text("\(newProject.favourite ? "❤️" : " ")")
+            }
+                        
         }
         
             

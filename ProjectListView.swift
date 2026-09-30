@@ -57,13 +57,14 @@ struct ProjectListView: View{
             
             
                 Text("\(project.name)")
-                .font(.title)
+                .font(.title2.monospaced())
                 .bold()
             
             
                 
                 Text("\(project.language)")
                 .monospaced()
+                .foregroundColor(.blue)
             
             Text("\(project.description)")
             Text("Status: \(project.status)")
