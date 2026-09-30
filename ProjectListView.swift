@@ -11,24 +11,20 @@ struct ProjectListView: View{
                 project in
                 
                 cardView(project: project)
-                    .onLongPressGesture(minimumDuration: 1){
+                    .contentShape(Rectangle())
+                    .onTapGesture{
                         model.path.append(project)
                     }
                     
-            }.onDelete{offsets in 
+                }.onDelete{offsets in 
                 model.deleteProject(at: offsets)
                 
             }
             .onMove{ source, destination in
                 model.moveProject(source: source, destination: destination)
             }
-            .navigationDestination(for: Project.self){
-                project in 
-                
-                EditView(editProject: project)
-                
-                
-            }
+            
+            
         }
     }
     

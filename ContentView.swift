@@ -25,6 +25,15 @@ struct ContentView: View {
                     AddView(newProject: newProject)
                 }
             }
+            // contentview owns navigationstack
+            .navigationDestination(for: Project.self){
+                project in 
+                
+                EditView(editProject: project)
+                
+                
+            }
+            
             .toolbar{
                 ToolbarItem{
                     Button{
