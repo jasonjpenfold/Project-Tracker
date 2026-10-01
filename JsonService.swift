@@ -4,7 +4,7 @@ struct JsonService{
     enum JsonServiceError: Error{
         case noFileError
     }
-    static func loadJson<T: Decodable>(filename: String, fileType: T )throws->T{
+    static func loadJson<T: Decodable>(filename: String)throws->T{
         let fileManager = FileManager.default
         let fileURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(filename)
         if !fileManager.fileExists(atPath: fileURL.path()){

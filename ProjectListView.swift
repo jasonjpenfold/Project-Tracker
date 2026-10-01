@@ -7,37 +7,39 @@ struct ProjectListView: View{
     var body: some View{
         @Bindable var model = model
         List{
-            //EditButton()
+            
             ForEach(model.currentList){
                 project in
                 
-                cardView(project: project)
+                CardView(project: project)
                     .contentShape(Rectangle())
                     .onTapGesture{
                         model.path.append(project)
                     }
                     
                 }
-            /*
+            
+           
+             // onmove only works if not filtering or sorting
+            .onMove(perform: model.canMove ? model.moveProject : nil)
+            
+             
+            // ondelete and onmove work on individual rows so put on ForEach
             .onDelete{offsets in 
                 model.deleteProject(at: offsets)
                 
             }
-            .onMove{ source, destination in
-                model.moveProject(source: source, destination: destination)
-            }
-             */
-            .searchable(text: $model.searchText, placement: .automatic)
-            
             
         }
+        //searchable works on whole list so put on List
+        .searchable(text: $model.searchText, placement: .automatic)
     }
     
-    private struct cardView: View{
+    private struct CardView: View{
         let project: Project
         var body: some View{
-            LazyVStack(alignment: .leading, spacing: 10){
-                cardText(project: project)
+            VStack(alignment: .leading, spacing: 10){
+                CardText(project: project)
                     
             }
             .padding()
@@ -57,7 +59,7 @@ struct ProjectListView: View{
                 
         }
     }
-    private struct cardText: View{
+    private struct CardText: View{
         let project: Project
         var body: some View{
             
@@ -75,7 +77,9 @@ struct ProjectListView: View{
             Text("\(project.description)")
             Text("Status: \(project.status)")
             Text("Started: \(project.dateStarted.formatted(date: .abbreviated, time: .shortened))")
+                .font(.headline)
             Text("Last: \(project.lastWorkedOn.formatted(date: .abbreviated, time: .shortened))")
+                .font(.headline)
             Text("Notes: \(project.notes)")
             HStack{
                 Spacer()

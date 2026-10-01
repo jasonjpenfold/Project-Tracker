@@ -40,13 +40,14 @@ struct ContentView: View {
             }
             
             .toolbar{
+                
                 ToolbarItem{
                     Picker("Filter", selection: $model.selectedFilter){
                         ForEach(ProjectTrackerViewModel.Filters.allCases){
                             Text($0.description)
                                 .tag($0)
                         }
-                    }.pickerStyle(.automatic)
+                    }.pickerStyle(.menu)
                 }
                 ToolbarItem{
                     Picker("Sorted By", selection: $model.selectedSort){
@@ -54,7 +55,7 @@ struct ContentView: View {
                             Text($0.description)
                                 .tag($0)
                         }
-                    }.pickerStyle(.automatic)
+                    }.pickerStyle(.menu)
                 }
                 ToolbarItem{
                     Button{
@@ -65,7 +66,7 @@ struct ContentView: View {
                 }
             }
         }.navigationBarTitleDisplayMode(.inline)
-        .navigationTitle("Home")
+        .navigationTitle("Project Tracker Menu")
         .padding()
         
         
@@ -88,6 +89,7 @@ extension ContentView{
     }
     
     private var footer: some View{
-        Text("The footer")
+        EditButton()
+            .buttonStyle(.glass)
     }
 }

@@ -9,7 +9,7 @@ struct ProjectStorage: Codable{
     }
     
     mutating func editProject(project: Project)->Bool{
-        // TODO edit project
+        
         if let projectIndex = getIndexFromIdHelper(project: project){
             projectDatabase[projectIndex] = project
             return true
@@ -17,25 +17,28 @@ struct ProjectStorage: Codable{
         return false
     }
     
-    mutating func deleteProject(at offSets: IndexSet){
-        projectDatabase.remove(atOffsets: offSets)
+    mutating func deleteProjectsWithId(of ids: Set<UUID>){
+        for id in ids {
+            removeProject(projectID: id)
+        }
     }
     
-    mutating func removeProject(project: Project){
-        projectDatabase.removeAll(where: {$0.id == project.id})
+    mutating func removeProject(projectID: UUID){
+        projectDatabase.removeAll(where: {$0.id == projectID})
     }
     
-    mutating func deleteAllProjects(){
-        projectDatabase.removeAll()
-    }
+    
     
     mutating func moveProject(from indexSet: IndexSet, to destination: Int){
         projectDatabase.move(fromOffsets: indexSet, toOffset: destination)
     }
+ 
+
+     
     
     mutating func loadData()->Bool{
         do{
-            self.projectDatabase = try JsonService.loadJson(filename: "projects.json", fileType: projectDatabase)
+            self.projectDatabase = try JsonService.loadJson(filename: "projects.json")
             return true
         }catch{
             print("Error loading json")
@@ -44,16 +47,19 @@ struct ProjectStorage: Codable{
             return false
         }
     }
-    func saveData(){
+    func saveData()->Bool{
         do{
             try JsonService.saveJson(filename:"projects.json",data:projectDatabase)
+            return true
         }catch{
             print("Error saving json data")
+            return false
         }
     }
     
     func getIndexFromIdHelper(project: Project)->Int?{
         return projectDatabase.firstIndex(where:{ $0.id == project.id})
     }
+    
     
 }
