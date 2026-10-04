@@ -5,3 +5,15 @@ used ProjectTrackerError and Alert(item:)
 
 - add search
 - needs currentList - derived state
+
+need to add .language enum to filter enums
+
+then this has associated value of Language enum eg .swift
+
+this then gets added to activeFilters set
+
+have Language filter on different tab
+
+contentview becomes a tabbed view
+
+navigation stack becomes an extension of contentview

@@ -1,6 +1,6 @@
 import SwiftUI
 
-enum Language: Identifiable,CaseIterable,CustomStringConvertible, Codable{
+enum Language: Identifiable,CaseIterable,CustomStringConvertible, Codable,Hashable{
     case swift
     case python
     case c 
