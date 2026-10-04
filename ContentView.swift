@@ -40,22 +40,28 @@ struct ContentView: View {
             }
             
             .toolbar{
-                
+                ToolbarItem(placement: .topBarLeading){
+                    Button(action: {model.toggleFavouritesFilter()}, label: { model.favourites ?
+                        Image(systemName: "heart.fill") : Image(systemName: "heart")
+                    })
+                }
+                /*
                 ToolbarItem{
                     Picker("Filter", selection: $model.selectedFilter){
                         ForEach(ProjectTrackerViewModel.Filters.allCases){
                             Text($0.description)
                                 .tag($0)
                         }
-                    }.pickerStyle(.menu)
+                    }.pickerStyle(.inline)
                 }
+                 */
                 ToolbarItem{
                     Picker("Sorted By", selection: $model.selectedSort){
                         ForEach(ProjectTrackerViewModel.SortedBy.allCases){
                             Text($0.description)
                                 .tag($0)
                         }
-                    }.pickerStyle(.menu)
+                    }.pickerStyle(.inline)
                 }
                 ToolbarItem{
                     Button{

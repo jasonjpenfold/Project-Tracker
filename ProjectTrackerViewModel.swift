@@ -11,9 +11,10 @@ class ProjectTrackerViewModel{
             newList = newList.filter{$0.name.localizedCaseInsensitiveContains(searchText)}
         }
         //filter
-        
-            newList = selectedFilter.apply(to: newList)
-        
+        for filterType in selectedFilters {
+            newList = filterType.apply(to: newList)
+        }
+                    
         //sort
         
             newList = selectedSort.apply(to: newList)
@@ -22,12 +23,15 @@ class ProjectTrackerViewModel{
         return newList
     }
     var searchText = ""
-    var selectedFilter: Filters = .none
+    var selectedFilters: Set<Filters> = []
     var selectedSort: SortedBy = .none
     var path = NavigationPath()
     var projectError: ProjectTrackerError? = nil
     var canMove: Bool{
-        return selectedFilter == .none && selectedSort == .none
+        return selectedFilters.isEmpty && selectedSort == .none
+    }
+    var favourites: Bool{
+        selectedFilters.contains(.favourites)
     }
     
     enum ProjectTrackerError: Error, LocalizedError, Identifiable, CustomStringConvertible{
@@ -107,5 +111,12 @@ class ProjectTrackerViewModel{
             idSet.insert(currentList[index].id) 
         }
         return idSet
+    }
+    func toggleFavouritesFilter(){
+        guard selectedFilters.contains(.favourites) else{
+            selectedFilters.insert(.favourites)
+            return
+        }
+        selectedFilters.remove(.favourites)
     }
     }

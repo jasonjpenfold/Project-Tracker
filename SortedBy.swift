@@ -2,27 +2,26 @@ import SwiftUI
 
 extension ProjectTrackerViewModel{
     enum SortedBy: Identifiable, CaseIterable, CustomStringConvertible{
-        
+        case none
         case nameAZ
         case nameZA
         case dateStarted
-        case none
-        
+                
         
         var id: Self{self}
         
         var description: String{
             switch self{
                 
+            case .none:
+                return "Not Sorted"
             case .nameAZ:
                 return "A-Z"
             case .nameZA:
                 return "Z-A"
             case .dateStarted:
                 return "Date started"
-            case .none:
-                return "Not Sorted"
-                
+                            
             }
         }
         
