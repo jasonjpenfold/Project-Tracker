@@ -1,101 +1,10 @@
 import SwiftUI
 
 struct ContentView: View {
-    @Environment(ProjectTrackerViewModel.self) private var model
+    @Environment(ProjectTrackerViewModel.self) internal var model
     
     var body: some View {
-        @Bindable var model = model
         
-        NavigationStack(path: $model.path){
-            VStack {
-                Spacer()
-                header
-                Spacer()
-                trackerBody
-                Spacer()
-                footer
-                Spacer()
-                
-                
-                
-            }
-            .navigationDestination(for: String.self){
-                value in 
-                if value == "AddView"{
-                    let newProject = model.createEmptyProject()
-                    AddView(newProject: newProject)
-                }
-            }
-            // contentview owns navigationstack
-            .navigationDestination(for: Project.self){
-                project in 
-                
-                EditView(editProject: project)
-                
-                
-            }
-            .alert(item: $model.projectError){
-                error in 
-                Alert(title: Text(error.description), message: Text(error.localizedDescription), dismissButton: .default(Text("Ok")))
-            }
-            
-            .toolbar{
-                ToolbarItem(placement: .topBarLeading){
-                    Button(action: {model.toggleFavouritesFilter()}, label: { model.favourites ?
-                        Image(systemName: "heart.fill") : Image(systemName: "heart")
-                    })
-                }
-                /*
-                ToolbarItem{
-                    Picker("Filter", selection: $model.selectedFilter){
-                        ForEach(ProjectTrackerViewModel.Filters.allCases){
-                            Text($0.description)
-                                .tag($0)
-                        }
-                    }.pickerStyle(.inline)
-                }
-                 */
-                ToolbarItem{
-                    Picker("Sorted By", selection: $model.selectedSort){
-                        ForEach(ProjectTrackerViewModel.SortedBy.allCases){
-                            Text($0.description)
-                                .tag($0)
-                        }
-                    }.pickerStyle(.inline)
-                }
-                ToolbarItem{
-                    Button{
-                        model.path.append("AddView")
-                    }label: {
-                        Image(systemName: "plus")
-                    }
-                }
-            }
-        }.navigationBarTitleDisplayMode(.inline)
-        .navigationTitle("Project Tracker Menu")
-        .padding()
-        
-        
-    }
-}
-
-extension ContentView{
-    private var header: some View{
-        VStack{
-            
-            Text("Project Tracker")
-                .font(.title.monospaced().bold())
-            
-        }
-            }
-    
-    private var trackerBody: some View{
-        
-        ProjectListView()
-    }
-    
-    private var footer: some View{
-        EditButton()
-            .buttonStyle(.glass)
+        navigation
     }
 }
