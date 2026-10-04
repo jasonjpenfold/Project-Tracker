@@ -14,7 +14,7 @@ extension ProjectTrackerViewModel{
             switch self{
                 
             case .none:
-                return "Not Sorted"
+                return "Unsorted"
             case .nameAZ:
                 return "A-Z"
             case .nameZA:

@@ -6,6 +6,7 @@ struct ProjectStorage: Codable{
     
     mutating func addProject(project: Project){
         projectDatabase.append(project)
+        
     }
     
     mutating func editProject(project: Project)->Bool{
@@ -31,6 +32,7 @@ struct ProjectStorage: Codable{
     
     mutating func moveProject(from indexSet: IndexSet, to destination: Int){
         projectDatabase.move(fromOffsets: indexSet, toOffset: destination)
+        
     }
  
 
@@ -39,6 +41,7 @@ struct ProjectStorage: Codable{
     mutating func loadData()->Bool{
         do{
             self.projectDatabase = try JsonService.loadJson(filename: "projects.json")
+            
             return true
         }catch{
             print("Error loading json")

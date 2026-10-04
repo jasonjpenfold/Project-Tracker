@@ -69,6 +69,7 @@ class ProjectTrackerViewModel{
     init(){
         
         projectError = projectStorage.loadData() ? nil : .loadError
+    
         
     }
     
