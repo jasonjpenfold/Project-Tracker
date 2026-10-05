@@ -11,12 +11,19 @@ struct ProjectListView: View{
             ForEach(model.currentList){
                 project in
                 
-                CardView(project: project)
-                    .contentShape(Rectangle())
-                    .onTapGesture{
-                        model.path.append(project)
+                VStack{
+                    
+                    
+                    CardView(project: project)
+                        .contentShape(Rectangle())
+                        .onTapGesture{
+                            model.path.append(project)
+                        }
+                    HStack{
+                        CardButtons(model: model, projectId: project.id)
                     }
                     
+                }
                 }
             
            
@@ -36,6 +43,7 @@ struct ProjectListView: View{
     }
     
     private struct CardView: View{
+        
         let project: Project
         var body: some View{
             VStack(alignment: .leading, spacing: 10){
@@ -60,7 +68,9 @@ struct ProjectListView: View{
         }
     }
     private struct CardText: View{
+        
         let project: Project
+        
         var body: some View{
             
             
@@ -78,9 +88,13 @@ struct ProjectListView: View{
             Text("Status: \(project.status)")
             Text("Started: \(project.dateStarted.formatted(date: .abbreviated, time: .shortened))")
                 .font(.headline)
-            Text("Last: \(project.lastWorkedOn.formatted(date: .abbreviated, time: .shortened))")
-                .font(.headline)
-            Text("Notes: \(project.notes)")
+            HStack{
+                Text("Last: \(project.lastWorkedOn.formatted(date: .abbreviated, time: .shortened))")
+                    .font(.headline)
+                Spacer()
+                
+            }
+                        Text("Notes: \(project.notes)")
             HStack{
                 Spacer()
                 Text("\(project.favourite ? "❤️" : "⚪️")")
@@ -88,7 +102,23 @@ struct ProjectListView: View{
                         
                     }
     }
-    
+    private struct CardButtons: View{
+        let model: ProjectTrackerViewModel
+        let projectId: UUID
+        @State private var markedAsWorkedOn = false
+        
+        var body: some View{
+            HStack{
+                Button("Worked on"){
+                    markedAsWorkedOn = model.markAsWorkedOn(projectId: projectId)
+                }.buttonStyle(.glass)
+                .foregroundStyle(markedAsWorkedOn ? .red : .blue)
+                Button("Favourite"){
+                    model.markAsFavourite(projectId: projectId)
+                }.buttonStyle(.glass)
+            }
+        }
+    }
         
 }
 

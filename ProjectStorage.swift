@@ -11,7 +11,7 @@ struct ProjectStorage: Codable{
     
     mutating func editProject(project: Project)->Bool{
         
-        if let projectIndex = getIndexFromIdHelper(project: project){
+        if let projectIndex = getIndexFromIdHelper(projectId: project.id){
             projectDatabase[projectIndex] = project
             return true
         }
@@ -60,9 +60,19 @@ struct ProjectStorage: Codable{
         }
     }
     
-    func getIndexFromIdHelper(project: Project)->Int?{
-        return projectDatabase.firstIndex(where:{ $0.id == project.id})
+    func getIndexFromIdHelper(projectId: UUID)->Int?{
+        return projectDatabase.firstIndex(where:{ $0.id == projectId})
     }
     
+    mutating func markAsWorkedOn(projectId: UUID)->Bool{
+        guard let index = getIndexFromIdHelper(projectId: projectId) else { return false }
+        projectDatabase[index].lastWorkedOn = .now
+        return true
+    }
+    mutating func markAsFavourite(projectId: UUID)->Bool{
+        guard let index = getIndexFromIdHelper(projectId: projectId) else { return false }
+        projectDatabase[index].favourite.toggle()
+        return true
+    }
     
 }

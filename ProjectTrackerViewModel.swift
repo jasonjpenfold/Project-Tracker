@@ -22,7 +22,7 @@ class ProjectTrackerViewModel{
         }
         //then filter selection of languages
         if !selectedLanguages.isEmpty{
-            newList = Language.keepLanguages(projects: newList, languages: selectedLanguages)
+            newList = Filters.keepLanguages(projects: newList, languages: selectedLanguages)
         }
     
         //sort
@@ -136,5 +136,17 @@ class ProjectTrackerViewModel{
             return
         }
         selectedFilters.remove(.language(languageType: language))
+    }
+    func markAsWorkedOn(projectId: UUID)->Bool{
+        let success =  projectStorage.markAsWorkedOn(projectId: projectId)
+        guard success else { return false }
+        saveData()
+        return true
+    }
+    func markAsFavourite(projectId: UUID){
+        let success = projectStorage.markAsFavourite(projectId: projectId)
+        guard success else { return }
+        saveData()
+        return 
     }
     }
