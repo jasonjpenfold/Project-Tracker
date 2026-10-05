@@ -9,6 +9,10 @@ extension ProjectTrackerViewModel{
                 Language.allCases.map{.language(languageType:$0)}
             ].flatMap{$0}
         }
+        
+        static var languages: [ProjectTrackerViewModel.Filters] {
+            Language.allCases.map{.language(languageType:$0)}
+        }
 
         
         case favourites
@@ -29,6 +33,12 @@ extension ProjectTrackerViewModel{
                 return "No Filter"
             
             }
+        }
+        var language: Language?{
+            if case .language(let lang) = self{
+                return lang
+            }
+            return nil
         }
         
         func apply(to projectList: [Project])->[Project]{

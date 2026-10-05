@@ -11,10 +11,20 @@ class ProjectTrackerViewModel{
             newList = newList.filter{$0.name.localizedCaseInsensitiveContains(searchText)}
         }
         //filter
+        var selectedLanguages: Set<Language> = []
+        // filter favourites but put language enums in set
         for filterType in selectedFilters {
-            newList = filterType.apply(to: newList)
+            if let language = filterType.language{
+                selectedLanguages.insert(language)
+            }else{
+                newList = filterType.apply(to: newList)}
+            
         }
-                    
+        //then filter selection of languages
+        if !selectedLanguages.isEmpty{
+            newList = Language.keepLanguages(projects: newList, languages: selectedLanguages)
+        }
+    
         //sort
         
             newList = selectedSort.apply(to: newList)
@@ -119,5 +129,12 @@ class ProjectTrackerViewModel{
             return
         }
         selectedFilters.remove(.favourites)
+    }
+    func toggleLanguageFilter(language: Language){
+        guard selectedFilters.contains(.language(languageType: language)) else{
+            selectedFilters.insert(.language(languageType: language))
+            return
+        }
+        selectedFilters.remove(.language(languageType: language))
     }
     }

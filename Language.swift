@@ -125,4 +125,14 @@ enum Language: Identifiable,CaseIterable,CustomStringConvertible, Codable,Hashab
             return "Verilog"
         }
     }
+    static func keepLanguages(projects:[Project], languages: Set<Language>)->[Project]{
+        return projects.filter{project in
+            for language in languages {
+                if project.language == language{
+                    return true
+                }
+            }  
+            return false 
+        }
+    }
 }
