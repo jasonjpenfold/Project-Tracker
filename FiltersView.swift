@@ -10,6 +10,9 @@ extension ContentView{
             Tab("Languages", systemImage: "character.book.closed"){
                 LanguagesFilterView()
             }
+            Tab("Status", systemImage: "play.rectangle.fill"){
+                StatusFilterView()
+            }
             Tab("Date", systemImage: "calendar"){
                 
             }

@@ -6,6 +6,7 @@ extension ProjectTrackerViewModel{
         case nameAZ
         case nameZA
         case dateStarted
+        case dateLast
                 
         
         var id: Self{self}
@@ -21,6 +22,8 @@ extension ProjectTrackerViewModel{
                 return "Z-A"
             case .dateStarted:
                 return "Date started"
+            case .dateLast:
+                return " Date last worked on"
                             
             }
         }
@@ -33,6 +36,8 @@ extension ProjectTrackerViewModel{
                 return projectList.sorted(by: {$0.name > $1.name})
             case .dateStarted:
                 return projectList.sorted(by:{ $0.dateStarted < $1.dateStarted})
+            case .dateLast:
+                return projectList.sorted(by:{ $0.lastWorkedOn < $1.lastWorkedOn})
             case .none:
                 return projectList
             }

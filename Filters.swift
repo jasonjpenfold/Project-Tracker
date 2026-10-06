@@ -17,6 +17,7 @@ extension ProjectTrackerViewModel{
         
         case favourites
         case language(languageType: Language)
+        case status(statusType: Status)
         case none
         
         
@@ -27,8 +28,10 @@ extension ProjectTrackerViewModel{
             
             case .favourites:
                 return "Favourites"
-            case .language(let language):
-                return language.description
+            case .language(let languageType):
+                return languageType.description
+            case .status(let statusType):
+                return statusType.description
             case .none:
                 return "No Filter"
             
@@ -40,6 +43,12 @@ extension ProjectTrackerViewModel{
             }
             return nil
         }
+        var status: Status?{
+            if case .status(let statusType) = self {
+                return statusType
+            }
+            return nil
+        }
         
         func apply(to projectList: [Project])->[Project]{
             switch self{
@@ -47,8 +56,10 @@ extension ProjectTrackerViewModel{
                 return projectList.filter{$0.favourite == true}
             case .none:
                 return projectList
-            case .language(languageType: let language):
-                return projectList.filter{$0.language == language}
+           // case .language(languageType: let language):
+                //return projectList.filter{$0.language == language}
+            default:
+                return projectList
             }
         }
         static func keepLanguages(projects:[Project], languages: Set<Language>)->[Project]{
@@ -61,6 +72,17 @@ extension ProjectTrackerViewModel{
                 return false 
             }
         }
+        static func keepStatuses(projects:[Project], statuses: Set<Status>)->[Project]{
+            return projects.filter{project in
+                for status in statuses {
+                    if project.status == status{
+                        return true
+                    }
+                }  
+                return false 
+            }
+        }
+        
     }
     
 }

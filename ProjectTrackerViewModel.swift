@@ -12,10 +12,13 @@ class ProjectTrackerViewModel{
         }
         //filter
         var selectedLanguages: Set<Language> = []
+        var selectedStatuses: Set<Status> = []
         // filter favourites but put language enums in set
         for filterType in selectedFilters {
             if let language = filterType.language{
                 selectedLanguages.insert(language)
+            }else if let status = filterType.status{
+                selectedStatuses.insert(status)
             }else{
                 newList = filterType.apply(to: newList)}
             
@@ -24,7 +27,10 @@ class ProjectTrackerViewModel{
         if !selectedLanguages.isEmpty{
             newList = Filters.keepLanguages(projects: newList, languages: selectedLanguages)
         }
-    
+        //then filter selection of statusTypes
+        if !selectedStatuses.isEmpty{
+            newList = Filters.keepStatuses(projects: newList, statuses: selectedStatuses)
+        }
         //sort
         
             newList = selectedSort.apply(to: newList)
@@ -136,6 +142,13 @@ class ProjectTrackerViewModel{
             return
         }
         selectedFilters.remove(.language(languageType: language))
+    }
+    func toggleStatusFilter(status: Status){
+        guard selectedFilters.contains(.status(statusType: status)) else{
+            selectedFilters.insert(.status(statusType: status))
+            return
+        }
+        selectedFilters.remove(.status(statusType: status))
     }
     func markAsWorkedOn(projectId: UUID)->Bool{
         let success =  projectStorage.markAsWorkedOn(projectId: projectId)
