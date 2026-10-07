@@ -18,6 +18,7 @@ extension ProjectTrackerViewModel{
         case favourites
         case language(languageType: Language)
         case status(statusType: Status)
+        case dateStarted(dateType: DateRange)
         case none
         
         
@@ -32,6 +33,8 @@ extension ProjectTrackerViewModel{
                 return languageType.description
             case .status(let statusType):
                 return statusType.description
+            case .dateStarted(let dateType):
+                return dateType.description
             case .none:
                 return "No Filter"
             
@@ -49,6 +52,12 @@ extension ProjectTrackerViewModel{
             }
             return nil
         }
+        var dateType: DateRange?{
+            if case .dateStarted(let dateRange) = self {
+                return dateRange
+            }
+            return nil
+        }
         
         func apply(to projectList: [Project])->[Project]{
             switch self{
@@ -56,12 +65,16 @@ extension ProjectTrackerViewModel{
                 return projectList.filter{$0.favourite == true}
             case .none:
                 return projectList
-           // case .language(languageType: let language):
-                //return projectList.filter{$0.language == language}
+           
+            case .dateStarted(let dateRange):
+                guard dateRange != .all else {return projectList}
+                return projectList.filter{$0.dateStarted > dateRange.convertToDate ?? .now}
+                
             default:
                 return projectList
             }
         }
+        
         static func keepLanguages(projects:[Project], languages: Set<Language>)->[Project]{
             return projects.filter{project in
                 for language in languages {

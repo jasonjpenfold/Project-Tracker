@@ -150,6 +150,13 @@ class ProjectTrackerViewModel{
         }
         selectedFilters.remove(.status(statusType: status))
     }
+    func toggleDateStartedFilter(dateRange: DateRange){
+        selectedFilters = selectedFilters.filter{ 
+            if case .dateStarted = $0{return false}
+            return true
+        }
+        selectedFilters.insert(.dateStarted(dateType: dateRange))
+    }
     func markAsWorkedOn(projectId: UUID)->Bool{
         let success =  projectStorage.markAsWorkedOn(projectId: projectId)
         guard success else { return false }
